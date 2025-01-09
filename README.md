@@ -67,7 +67,122 @@ kindergartens = [
         },
         'Children': [
             {'Name': 'Lena', 'Age': 4, 'Allergies': ['Peanuts'], 'FavoriteActivity': 'Painting'},
-            {'Name': 'Max', 'Age': 5, 'Allergies': ['None'], 'FavoriteActivity': 'Building Blocks'}
+            {'Name': 'Max', 'Age': 5, 'Allergies': ['Eggs', 'Nuts', 'Dairy'], 'FavoriteActivity': 'Building Blocks'}
         ]
     },  
 ]
+```
+## Example Terminal Output
+### Menu
+```bash
+==================================================
+===        KINDERGARTEN MANAGING SYSTEM        ===
+==================================================
+ Please choose one of the following tasks:
+ 1.    Add Kindergarten 
+ 2.    Remove Kindergarten 
+ 3.    See information about one Kindergarten 
+ 4.    Register child in Kindergarten 
+ 5.    Search for a child 
+ 6.    List Children of a Kindergarten 
+ 7.    Unsubscribe child from Kindergarten 
+ 8.    Move child to another kindergarten 
+ 9.    Add facilities to a Kindergarten 
+ 10.   Remove facility from Kindergarten 
+ 11.   Add child allergies 
+ 12.   Remove child allergies 
+ 13.   Show all Kindergartens Information 
+==================================================
+
+Enter a task number: 
+```
+### Listing children from kindergarten
+```bash
+Enter a task number: 6
+Enter a name of a Kindergarten: Little Stars Kindergarten
+Name: Lara
+Age: 4
+Allergies:
+Favorite Activity: Gardening
+--------------------------------
+Name: Tim
+Age: 5
+Allergies: Nuts
+Favorite Activity: Acting
+--------------------------------
+```
+### Add allergies to a child
+```bash
+Enter a task number: 11
+Enter a name of a Child: Lara
+Enter one allergy: Soy
+Enter one allergy: Eggs
+Enter one allergy: Shellfish
+Enter one allergy: 
+allergies added
+Do you want go back to menu? (Y/N)
+y
+```
+### List all kindergarten
+```bash
+Enter a task number: 13
+--------------------
+Name: Sunshine Kindergarten
+Location: Berlin, Germany
+Capacity: 120
+Facilities:
+ - Playground
+ - Library
+ - Art Room
+Contact Information:
+ - Phone: +49 30 123456
+ - Email: info@sunshine-kindergarten.de
+Number of enrolled infants: 2
+Available enrollment spots: 118
+--------------------
+--------------------
+Name: Happy Kids Kindergarten
+Location: Munich, Germany
+Capacity: 100
+Facilities:
+ - Outdoor Play Area
+ - Music Room
+ - Science Lab
+Contact Information:
+ - Phone: +49 89 654321
+ - Email: info@happykids.de
+Number of enrolled infants: 2
+Available enrollment spots: 98
+--------------------
+--------------------
+Name: Rainbow Kindergarten
+Location: Hamburg, Germany
+Capacity: 3
+Facilities:
+ - Swimming Pool
+ - Gymnasium
+ - Library
+Contact Information:
+ - Phone: +49 40 789012
+ - Email: info@rainbow-kindergarten.de
+Number of enrolled infants: 2
+Available enrollment spots: 1
+--------------------
+--------------------
+Name: Little Stars Kindergarten
+Location: Frankfurt, Germany
+Capacity: 90
+Facilities:
+ - Garden
+ - Theater Room
+ - Art Studio
+Contact Information:
+ - Phone: +49 69 345678
+ - Email: info@littlestars.de
+Number of enrolled infants: 2
+Available enrollment spots: 88
+--------------------
+Do you want go back to menu? (Y/N)
+n
+Bye!
+```

@@ -10,8 +10,8 @@ kindergartens = [
             'Email': 'info@sunshine-kindergarten.de'
         },
         'Children': [
-            {'Name': 'Lena', 'Age': 4, 'Allergies': ['Peanuts'], 'FavoriteActivity': 'Painting'},
-            {'Name': 'Max', 'Age': 5, 'Allergies': ['None'], 'FavoriteActivity': 'Building Blocks'}
+            {'Name': 'Lena', 'Age': 4, 'Allergies': ['Peanuts', 'Tomatoes'], 'FavoriteActivity': 'Painting'},
+            {'Name': 'Max', 'Age': 5, 'Allergies': [], 'FavoriteActivity': 'Building Blocks'}
         ]
     },
     {
@@ -38,7 +38,7 @@ kindergartens = [
             'Email': 'info@rainbow-kindergarten.de'
         },
         'Children': [
-            {'Name': 'Emma', 'Age': 5, 'Allergies': ['None'], 'FavoriteActivity': 'Reading'},
+            {'Name': 'Emma', 'Age': 5, 'Allergies': ['Eggs', 'Nuts', 'Dairy', 'Shellfish', 'Wheat', 'Soy'], 'FavoriteActivity': 'Reading'},
             {'Name': 'Oliver', 'Age': 3, 'Allergies': ['Eggs','Nuts'], 'FavoriteActivity': 'Playing in the Gym'}
         ]
     },
@@ -52,31 +52,38 @@ kindergartens = [
             'Email': 'info@littlestars.de'
         },
         'Children': [
-            {'Name': 'Lara', 'Age': 4, 'Allergies': ['None'], 'FavoriteActivity': 'Gardening'},
+            {'Name': 'Lara', 'Age': 4, 'Allergies': [], 'FavoriteActivity': 'Gardening'},
             {'Name': 'Tim', 'Age': 5, 'Allergies': ['Nuts'], 'FavoriteActivity': 'Acting'}
         ]
     }
     
 ]
-'''
-Menü function, it runs at the beginning
-'''
+#Menu printing
+def show_menu(): 
+    menu = ( 
+            "==================================================\n" 
+            "===        KINDERGARTEN MANAGING SYSTEM        ===\n"
+            "==================================================\n" 
+            " Please choose one of the following tasks:\n"
+            " 1.    Add Kindergarten \n" 
+            " 2.    Remove Kindergarten \n" 
+            " 3.    See information about one Kindergarten \n" 
+            " 4.    Register child in Kindergarten \n" 
+            " 5.    Search for a child \n" 
+            " 6.    List Children of a Kindergarten \n" 
+            " 7.    Unsubscribe child from Kindergarten \n" 
+            " 8.    Move child to another kindergarten \n" 
+            " 9.    Add facilities to a Kindergarten \n" 
+            " 10.   Remove facility from Kindergarten \n" 
+            " 11.   Add child allergies \n" 
+            " 12.   Remove child allergies \n" 
+            " 13.   Show all Kindergartens Information \n"
+            "==================================================\n"
+    ) 
+    print(menu)
+#main function, it runs at the beginning
 def main():
-    print("---Kindergarten managing System ---\n")
-    print("--- Please choose one of the following tasks:\n")
-    print("--- 1.  Add Kindergarten ---\n")
-    print("--- 2.  Remove Kindergarten ---\n")
-    print("--- 3.  See information about one Kindergarten --\n")
-    print("--- 4.  Register child in Kindergarten ---\n")
-    print("--- 5.  Search for a child ---\n")
-    print("--- 6.  List Children of a Kindergarten ---\n")
-    print("--- 7.  Unsubscribe child from Kindergarten ---\n")
-    print("--- 8.  Move child to another kindergarten ---\n")
-    print("--- 9.  Add facilities to a Kindergarten ---\n")
-    print("--- 10.  Remove facility from Kindergarten ---\n")
-    print("--- 11.  Add child allergies ---\n")
-    print("--- 12.  Remove child allergies ---\n")
-    print("--- 13.  Show all Kindergartens Information ---\n")
+    show_menu()
     chosen_number = input("Enter a task number: ")
     # Validate if the input is an integer 
     if not chosen_number.isdigit(): 
@@ -89,7 +96,11 @@ def main():
             print(f'You want to add Kindergarten to the system, please fill the data:\n')
             name = input("Enter a name: ")
             location = input("Enter a location: ")
-            capacity = int(input("How many children are allowed? "))
+            capacity = input("How many children are allowed? ")
+            while not capacity.isdigit(): 
+                print("Capacity must be a number")
+                capacity = input("How many children are allowed? ")
+            capacity = int(capacity)
             #phone number validator
             while True:
                 phone = input("Phone number (format:+49 40 789012):")
@@ -489,13 +500,10 @@ print all the kindergartens
 '''
 def show_kindergartens():
     for kg in kindergartens:
+        kg_name = kg['Name']
         print("-"*20)
         print(f'Name: {kg['Name']}')
-        print(f'Location: {kg['Location']}')
-        print(f'Capacity: {kg['Capacity']}')
-        print(f'Facilities: {kg['Facilities']}')
-        print(f'Contact: {kg['Contact']}')
-        print(f'Children: {kg['Children']}')
+        kindergarten_information(kg_name)
         print("-"*20)
 #regex phone validator
 '''
@@ -509,8 +517,6 @@ def validate_phone(phone):
 def validate_email(email):
     email_pattern = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
     return True if re.match(email_pattern, email) else False
-
-
 
 '''
 Function that asks you, if the programm should go back to the 

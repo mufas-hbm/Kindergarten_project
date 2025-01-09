@@ -22,7 +22,7 @@
 #### 1.1. Add Kindergarten
 - Pass name, location, capacity, and contact information. 
 - Facilities and children are empty by default. 
-- Data validation: phone and email with regex
+- Data regex validation: phone and email
 #### 1.2. Remove Kindergarten 
 - Pass the name of the kindergarten to remove
 #### 1.3. Show Information about one Kindergarten 
@@ -52,7 +52,6 @@
 - Cannot add if the allergy already
 #### 2.7. Remove allergy
 - Pass the child's name.
-
 ## Example Kindergartens Data
 ```python
 kindergartens = [

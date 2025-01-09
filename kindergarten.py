@@ -164,6 +164,9 @@ def main():
         elif chosen_number == 13:
             show_kindergartens()
             keepOn()
+        elif chosen_number == 14:
+            update_info()
+            keepOn()
         else:
             print("this option doesn't exist, try again")
             main()
@@ -513,11 +516,29 @@ return False if wrong data
 def validate_phone(phone):
     phone_pattern = r'^\+49 \d{2} \d{6}$' 
     return True if re.match(phone_pattern, phone) else False
-#eregex mail validator
+#regex mail validator
 def validate_email(email):
     email_pattern = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
     return True if re.match(email_pattern, email) else False
-
+'''
+WORKING ON THIS
+#update Info
+def update_info():
+    type = input("Which kind of info you want to update(Kindergarten/Children)?")
+    update_kindergarten_info() if type == 'Kindergarten' else update_child_info()
+#update Kindergarten Info
+def update_kindergarten_info():
+    name = input(f'Enter the Kindergarten name:')
+    if find_kindergarten(name) == None:
+            return
+    else:
+        kg = find_kindergarten(name)
+        categories = '/'.join(kg.keys())
+        key = input(f'Choose one of the categories ({categories}):')
+        kg[key] = input(f'new information about {key}:')
+        print(f'{key} updated')
+    return kindergartens
+'''
 '''
 Function that asks you, if the programm should go back to the 
 menu to try again or go out
@@ -531,4 +552,5 @@ def keepOn():
         main()
     else:
         print("Bye!")
+#program runs
 main()

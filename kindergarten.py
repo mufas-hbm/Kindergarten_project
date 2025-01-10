@@ -1,4 +1,6 @@
 import re
+
+#default data
 kindergartens = [
     {
         'Name': 'Sunshine Kindergarten',
@@ -69,7 +71,7 @@ def show_menu():
             " 2.    Remove Kindergarten \n" 
             " 3.    See information about one Kindergarten \n" 
             " 4.    Register child in Kindergarten \n" 
-            " 5.    Search for a child \n" 
+            " 5.    See information about child \n" 
             " 6.    List Children of a Kindergarten \n" 
             " 7.    Unsubscribe child from Kindergarten \n" 
             " 8.    Move child to another kindergarten \n" 
@@ -83,6 +85,7 @@ def show_menu():
             "==================================================\n"
     ) 
     print(menu)
+
 #main function, it runs at the beginning
 def main():
     show_menu()
@@ -132,7 +135,7 @@ def main():
             keepOn()
         elif chosen_number == 5:
             name = input("Enter the name of the child to search: ")
-            search_child(name)
+            show_child_information(name)
             keepOn()
         elif chosen_number == 6:
             name = input("Enter a name of a Kindergarten: ")
@@ -174,6 +177,33 @@ def main():
         else:
             print("this option doesn't exist, try again")
             main()
+#search for a kindergarten
+'''
+search for one kindergarten in the list of kindergartens
+arguments:
+    name: str
+return:
+    kindergarten: dict if name was found, otherwise return message
+'''
+def find_kindergarten(name):
+    for kg in kindergartens:
+         if kg['Name'] == name:
+            return kg
+    print(f'this Kindergarten was not found')
+    return None
+
+#Show all Kindergartens
+'''
+print all the kindergartens
+'''
+def show_kindergartens():
+    for kg in kindergartens:
+        kg_name = kg['Name']
+        print("-"*20)
+        print(f'Name: {kg['Name']}')
+        kindergarten_information(kg_name)
+        print("-"*20)
+
 #Adding Kindergarten
 '''
 create a new Kindergarten and add to the List of dictionaries
@@ -198,6 +228,7 @@ def add_kindergarten(name, location, capacity, phone, email):
     kindergartens.append(new_kindergarten)
     print(f'Kindergarten {name} was added to the system')
     return kindergartens
+
 #Delete Kindergarten
 '''
 delete a kindergarten passing the name. If doesn't exists, show message
@@ -212,6 +243,7 @@ def remove_kindergarten(name):
         kindergartens.remove(kg)
         print(f'Kindergarten {name} was succesfully removed from the system')
         return kindergartens
+    
 #See information about one Kindergarten
 '''
 show all the data about one kindergarten
@@ -243,6 +275,7 @@ def kindergarten_information(name):
 
 #lambda function returns number of children in a kindergarten 
 count_children = lambda children: len(children)
+
 #unpack facilities
 '''
  unpacking list facilities of one kindergarten to list
@@ -250,6 +283,7 @@ count_children = lambda children: len(children)
 def unpack_facilities(kindergarten):
     for facility in kindergarten['Facilities']:
         print(f' - {facility}')
+
 #add facilities
 '''
 add facilities to a kindergarten if not already exist.
@@ -299,28 +333,42 @@ def remove_facility(name):
             return kindergartens
         else:
             print(f'{name} doesn\'t have this facility')
-#Child search
+
+#find child
 '''
-search for a child and show data if child exists. if not, show message
+search for a child in system. if child doesn't exists returns None
 arguments:
     name: str
-'''  
-def search_child(name):
-    child_found = False
+return:
+    child: dict
+    kg: dict
+'''
+def find_child(name):
     for kg in kindergartens:
         children = kg['Children']
         for child in children:
             child_name = child['Name']
             if child_name == name:
-                print(f'what school does he go to: {kg['Name']}')
-                print(f'Name: {child['Name']}')
-                print(f'Age: {child['Age']}')
-                print(f'Allergies: {', '.join(child['Allergies'])}')
-                print(f'Favorite Activity: {child['FavoriteActivity']}')
-                child_found = True
-                break
-    if not child_found:
-        print(f'Child {name} was not found on the system')
+                return child, kg
+    print(f'Child {name} was not found on the system')
+    return None
+
+#List child information
+'''
+search for a child and show information
+arguments:
+    name: str
+'''  
+def show_child_information(name):
+    if find_child(name) == None:
+        return
+    else:
+        child, kindergarten = find_child(name)
+        print(f'what school does he go to: {kindergarten['Name']}')
+        print(f'Name: {child['Name']}')
+        print(f'Age: {child['Age']}')
+        print(f'Allergies: {', '.join(child['Allergies'])}')
+        print(f'Favorite Activity: {child['FavoriteActivity']}')
 
 #List Children of a kindergarten
 '''
@@ -334,12 +382,16 @@ def list_children(kindergarten):
     else:
         kg = find_kindergarten(kindergarten)
         children = kg['Children']
-        for child in children:
-            print(f'Name: {child['Name']}')
-            print(f'Age: {child['Age']}')
-            print(f'Allergies: {', '.join(child['Allergies'])}')
-            print(f'Favorite Activity: {child['FavoriteActivity']}')
-            print(f'--------------------------------')
+        if len(children) == 0:
+            print (f'{kg['Name']} has no children registered')
+        else:       
+            for child in children:
+                print(f'Name: {child['Name']}')
+                print(f'Age: {child['Age']}')
+                print(f'Allergies: {', '.join(child['Allergies'])}')
+                print(f'Favorite Activity: {child['FavoriteActivity']}')
+                print(f'--------------------------------')
+
 #add child
 '''
 add child passing a kindergarten 
@@ -362,7 +414,11 @@ def add_child(kindergarten):
             new_child = {}
             #take data from input
             name = input(f'name: ')
-            age = int(input(f'Age: '))
+            age = input(f'Age: ')
+            while not age.isdigit(): 
+                print("Age must be a number")
+                age = input("Age: ")
+            age = int(age)
             allergies = []
             favorite_activity = input(f'Favorite activity: ')
             #add data to dictionary
@@ -374,6 +430,7 @@ def add_child(kindergarten):
             children.append(new_child)
             print(f'Child was added')
             return kindergartens
+        
 #remove child
 '''
 remove a child by passing a name
@@ -383,17 +440,14 @@ return:
     kindergartens: list
 '''
 def remove_child(name):
-    child_found = False
-    for kg in kindergartens:
-        children = kg['Children']
-        for child in children:
-            child_name = child['Name']
-            if child_name == name:
-                children.remove(child)
-                print(f'Child was succesfully removed')
-                return kindergartens
-    if not child_found:
-        print(f'Child {name} was not found on the system')
+    if find_child(name) == None:
+        return
+    else:
+        child, kindergarten = find_child(name)
+        kindergarten['Children'].remove(child)
+        print(f'Child was succesfully removed')
+        return kindergartens
+    
 #move child from kindergarten to another
 '''
 move one child from one kindergarten to another
@@ -430,6 +484,7 @@ def move_child(name_child, name_kindergarten):
     new_kg['Children'].append(temp)
     print(f'{name_child} was moved from {old_kg_name} to {new_kg_name}')
     return kindergartens
+
 #Add child allergies from the system
 '''
 add allergies to a child passing a name
@@ -438,27 +493,23 @@ arguments:
 return: kindergartens
 '''
 def add_allergies(name):
-    child_found = False
-    for kg in kindergartens:
-        children = kg['Children']
-        for child in children:
-            child_name = child['Name']
-            allergies = child['Allergies']
-            if child_name == name:
-                #loop runs until break statement comes
-                while True:
-                    allergy = input(f'Enter one allergy: ')
-                    if allergy == "":
-                        break
-                    elif allergy in allergies:
-                        print(f'{allergy} already exists')
-                    else:
-                        allergies.append(allergy)
-                print(f'allergies added')
-                return kindergartens
-    if not child_found:
-        print(f'Child {name} was not found on the system')
+    if find_child(name) == None:
         return
+    else:
+        child, kindergarten = find_child(name)
+        allergies = child['Allergies']
+        #loop runs until break statement comes
+        while True:
+            allergy = input(f'Enter one allergy: ')
+            if allergy == "":
+                break
+            elif allergy in allergies:
+                print(f'{allergy} already exists')
+            else:
+                allergies.append(allergy)
+        print(f'allergies added')
+        return kindergartens
+    
 #Remove child allergy from the system
 '''
 remove allergy from child passing a name
@@ -467,51 +518,20 @@ arguments:
 return: kindergartens
 '''
 def remove_allergy(name):
-    child_found = False
-    for kg in kindergartens:
-        children = kg['Children']
-        for child in children:
-            child_name = child['Name']
-            allergies = child['Allergies']
-            if child_name == name:
-                    allergy = input(f'Enter one allergy: ')
-                    if allergy in allergies:
-                        allergies.remove(allergy)
-                        print(f'allergy removed')
-                        return kindergartens
-                    else:
-                        print(f'{name} is not allergical to {allergy}')
-                        return
-    if not child_found:
-        print(f'Child {name} was not found on the system')
+    if find_child(name) == None:
         return
-
-#search for a kindergarten
-'''
-search for one kindergarten in the list of kindergartens
-arguments:
-    name: str
-return:
-    kindergarten: dict if name was found, otherwise return message
-'''
-def find_kindergarten(name):
-    for kg in kindergartens:
-         if kg['Name'] == name:
-            return kg
-    print(f'this Kindergarten was not found')
-    return None
-
-#Show all Kindergartens
-'''
-print all the kindergartens
-'''
-def show_kindergartens():
-    for kg in kindergartens:
-        kg_name = kg['Name']
-        print("-"*20)
-        print(f'Name: {kg['Name']}')
-        kindergarten_information(kg_name)
-        print("-"*20)
+    else:
+        child, kindergarten = find_child(name)
+        allergies = child['Allergies']
+        allergy = input(f'Enter one allergy: ')
+        if allergy in allergies:
+            allergies.remove(allergy)
+            print(f'allergy removed')
+            return kindergartens
+        else:
+            print(f'{name} is not allergical to {allergy}')
+            return
+        
 #regex phone validator
 '''
 validate, if the input phone number are only digits
@@ -616,8 +636,10 @@ def update_child_info():
                 return kindergartens
     if not child_found:
         print(f'Child {name} was not found on the system')
+
+#stay in the programm
 '''
-Function that asks you, if the programm should go back to the 
+Function that asks you, if the programm keeps runing going again to the 
 menu to try again or go out
 '''
 def keepOn():
@@ -629,5 +651,6 @@ def keepOn():
         main()
     else:
         print("Bye!")
-#program runs
+
+#run the programm
 main()

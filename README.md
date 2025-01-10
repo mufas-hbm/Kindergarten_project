@@ -87,7 +87,7 @@ kindergartens = [
  2.    Remove Kindergarten 
  3.    See information about one Kindergarten 
  4.    Register child in Kindergarten 
- 5.    Search for a child 
+ 5.    See information about child  
  6.    List Children of a Kindergarten 
  7.    Unsubscribe child from Kindergarten 
  8.    Move child to another kindergarten 

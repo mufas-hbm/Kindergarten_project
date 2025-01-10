@@ -78,6 +78,8 @@ def show_menu():
             " 11.   Add child allergies \n" 
             " 12.   Remove child allergies \n" 
             " 13.   Show all Kindergartens Information \n"
+            " 14.   Update any Information\n"
+            " 15.   Leave\n"
             "==================================================\n"
     ) 
     print(menu)
@@ -167,6 +169,8 @@ def main():
         elif chosen_number == 14:
             update_info()
             keepOn()
+        elif chosen_number == 15:
+            print(f'See you next time')
         else:
             print("this option doesn't exist, try again")
             main()
@@ -520,25 +524,98 @@ def validate_phone(phone):
 def validate_email(email):
     email_pattern = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
     return True if re.match(email_pattern, email) else False
-'''
-WORKING ON THIS
+
+
 #update Info
+'''
+update any Infomation from any Kindergarten. stop runs, if you input wrong category
+'''
 def update_info():
     type = input("Which kind of info you want to update(Kindergarten/Children)?")
     update_kindergarten_info() if type == 'Kindergarten' else update_child_info()
 #update Kindergarten Info
 def update_kindergarten_info():
     name = input(f'Enter the Kindergarten name:')
-    if find_kindergarten(name) == None:
-            return
+    if find_kindergarten(name) is None:
+        return
     else:
         kg = find_kindergarten(name)
         categories = '/'.join(kg.keys())
-        key = input(f'Choose one of the categories ({categories}):')
-        kg[key] = input(f'new information about {key}:')
-        print(f'{key} updated')
+        updated_keys = []
+        while True:
+            key = input(f'Choose one of the categories ({categories}):')
+            if key not in kg:
+                print(f'invalid category')
+                break
+            if key == 'Capacity':
+                kg[key] = int(input(f'new {key}:'))
+                updated_keys.append(key)
+            elif key in ['Name','Location']:    
+                kg[key] = input(f'new {key}:')
+                updated_keys.append(key)
+            elif key == 'Facilities':
+                option = input(f'you want to add or remove?')
+                add_facilities(kg['Name']) if option == 'add' else remove_facility(kg['Name'])
+                updated_keys.append(key)
+            elif key == 'Contact':
+                contact_dict = kg['Contact']
+                option = input(f'you want to update Phone or Email?')
+                if option == 'Phone':
+                    #phone number validator
+                    while True:
+                        phone = input("Phone number (format:+49 40 789012):")
+                        if validate_phone(phone):
+                            contact_dict['Phone'] = phone
+                            key = 'Phone'
+                            updated_keys.append(key)
+                            break 
+                        else: print("Invalid phone number. Please try again.")
+                elif option == 'Email':
+                    #email validator
+                    while True:
+                        email = input("Email: ")
+                        if validate_email(email): 
+                            contact_dict['Email'] = email
+                            key = 'Email'
+                            updated_keys.append(key)
+                            break 
+                        else: print("Invalid email format. Please try again.")  
+        print(f'Nothing updated')if len(updated_keys) == 0 else print(f'{' and '.join(updated_keys)} from {kg['Name']} updated')
     return kindergartens
+#update child Information
 '''
+update any Infomation from any Child. stop runs, if you input wrong category
+'''
+def update_child_info():
+    name = input(f'Enter child name: ')
+    child_found = False
+    for kg in kindergartens:
+        children = kg['Children']
+        for child in children:
+            child_name = child['Name']
+            if child_name == name:
+                categories = '/'.join(child.keys())
+                updated_keys = []
+                while True:
+                    key = input(f'Choose one of the categories ({categories[5:]}):')#we avoid to change the name
+                    if key not in child:
+                        print(f'invalid category')
+                        break
+                    if key == 'Age':
+                        child[key] = int(input(f'new {key}:'))
+                        updated_keys.append(key)
+                    elif key == 'Allergies':
+                        option = input(f'you want to add or remove?')
+                        add_allergies(child['Name']) if option == 'add' else remove_allergy(child['Name'])
+                        updated_keys.append(key)
+                    elif key == 'FavoriteActivity':
+                        child[key] = input(f'new {key}:')
+                        updated_keys.append(key)
+                child_found = True
+                print(f'Nothing updated')if len(updated_keys) == 0 else print(f'{' and '.join(updated_keys)} from {child['Name']} updated')
+                return kindergartens
+    if not child_found:
+        print(f'Child {name} was not found on the system')
 '''
 Function that asks you, if the programm should go back to the 
 menu to try again or go out

@@ -1,8 +1,9 @@
 # Kindergarten managing system
--  This Python program is designed to help you manage all the important information about kindergartens, like their locations, facilities, and contact details. It also keeps track of the children enrolled, including their allergies and favorite activities. With this program, you can easily add, remove, and update kindergarten details, making the management process smooth and efficient.
+- This Python program is designed to help you manage all the important information about kindergartens, like their locations, facilities, and contact details. It also keeps track of the children enrolled, including their allergies and favorite activities. With this program, you can easily add, remove, and update kindergarten details, making the management process smooth and efficient.
 
 ## Data Type
-    The `kindergartens` variable is a list of dictionaries that keep various types of information such as strings, integers, lists, and dictionaries.
+- The `kindergartens` variable is a list of dictionaries that keep various types of information such as strings, integers, lists, and dictionaries.
+
 ### Format: 
 - **Name**: `str` - The name of the kindergarten 
 - **Location**: `str` - The location of the kindergarten 
@@ -52,6 +53,10 @@
 - Cannot add if the allergy already
 #### 2.7. Remove allergy
 - Pass the child's name.
+### 3. Update Information
+#### Change any information you want from system
+- Choose between Kindergarten or Children and update any Info you need
+
 ## Example Kindergartens Data
 ```python
 kindergartens = [
@@ -90,7 +95,9 @@ kindergartens = [
  10.   Remove facility from Kindergarten 
  11.   Add child allergies 
  12.   Remove child allergies 
- 13.   Show all Kindergartens Information 
+ 13.   Show all Kindergartens Information
+ 14.   update any Information
+ 15.   Leave
 ==================================================
 
 Enter a task number: 

@@ -178,14 +178,14 @@ def main():
             print("this option doesn't exist, try again")
             main()
 #search for a kindergarten
-'''
+def find_kindergarten(name):
+    '''
 search for one kindergarten in the list of kindergartens
 arguments:
     name: str
 return:
     kindergarten: dict if name was found, otherwise return message
-'''
-def find_kindergarten(name):
+    '''
     for kg in kindergartens:
          if kg['Name'] == name:
             return kg
@@ -193,10 +193,10 @@ def find_kindergarten(name):
     return None
 
 #Show all Kindergartens
-'''
-print all the kindergartens
-'''
 def show_kindergartens():
+    '''
+print all the kindergartens
+    '''
     for kg in kindergartens:
         kg_name = kg['Name']
         print("-"*20)
@@ -205,15 +205,15 @@ def show_kindergartens():
         print("-"*20)
 
 #Adding Kindergarten
-'''
+def add_kindergarten(name, location, capacity, phone, email):
+    '''
 create a new Kindergarten and add to the List of dictionaries
 By creating a new one, there are no children (we create key Children but its empty by default)
 arguments:
     name: str
     location: str
     capacity: int
-'''
-def add_kindergarten(name, location, capacity, phone, email):
+    '''
     new_kindergarten = {
         'Name': name,
         'Location': location,
@@ -230,12 +230,12 @@ def add_kindergarten(name, location, capacity, phone, email):
     return kindergartens
 
 #Delete Kindergarten
-'''
+def remove_kindergarten(name):
+    '''
 delete a kindergarten passing the name. If doesn't exists, show message
 arguments:
     name: str
-'''
-def remove_kindergarten(name):
+    '''
     if find_kindergarten(name) == None:
         return
     else:
@@ -245,12 +245,12 @@ def remove_kindergarten(name):
         return kindergartens
     
 #See information about one Kindergarten
-'''
+def kindergarten_information(name):
+    '''
 show all the data about one kindergarten
 arguments:
     name: str
-'''
-def kindergarten_information(name):
+    '''
     if find_kindergarten(name) == None:
         return
     else:
@@ -277,22 +277,22 @@ def kindergarten_information(name):
 count_children = lambda children: len(children)
 
 #unpack facilities
-'''
- unpacking list facilities of one kindergarten to list
- '''
 def unpack_facilities(kindergarten):
+    '''
+unpacking list facilities of one kindergarten to list
+    '''
     for facility in kindergarten['Facilities']:
         print(f' - {facility}')
 
 #add facilities
-'''
+def add_facilities(name):
+    '''
 add facilities to a kindergarten if not already exist.
 arguments:
     name: str
 return:
     kindergartens: list of dict
-'''
-def add_facilities(name):
+    '''
     if find_kindergarten(name) == None:
         return
     else:
@@ -313,14 +313,14 @@ def add_facilities(name):
         return kindergartens
 
 #remove facility
-'''
+def remove_facility(name):
+    '''
 remove facilitiy from Kindergarten
 arguments:
     name: str
 return:
     kindergartens: list of dict
-'''
-def remove_facility(name):
+    '''
     if find_kindergarten(name) == None:
             return
     else:
@@ -335,15 +335,15 @@ def remove_facility(name):
             print(f'{name} doesn\'t have this facility')
 
 #find child
-'''
+def find_child(name):
+    '''
 search for a child in system. if child doesn't exists returns None
 arguments:
     name: str
 return:
     child: dict
     kg: dict
-'''
-def find_child(name):
+    '''
     for kg in kindergartens:
         children = kg['Children']
         for child in children:
@@ -353,13 +353,13 @@ def find_child(name):
     print(f'Child {name} was not found on the system')
     return None
 
-#List child information
-'''
+#List child information 
+def show_child_information(name):
+    '''
 search for a child and show information
 arguments:
     name: str
-'''  
-def show_child_information(name):
+    ''' 
     if find_child(name) == None:
         return
     else:
@@ -371,12 +371,12 @@ def show_child_information(name):
         print(f'Favorite Activity: {child['FavoriteActivity']}')
 
 #List Children of a kindergarten
-'''
+def list_children(kindergarten):
+    '''
 passing a kindergarten list all the children
 argument:
     kindergarten: str
-'''
-def list_children(kindergarten):
+    '''
     if find_kindergarten(kindergarten) == None:
         return
     else:
@@ -393,15 +393,15 @@ def list_children(kindergarten):
                 print(f'--------------------------------')
 
 #add child
-'''
+def add_child(kindergarten):
+    '''
 add child passing a kindergarten 
 arguments:
     kindergarten:str
 return:
     None if Kindergarten is already full of children
     kindergartens: list
-'''
-def add_child(kindergarten):
+    '''
     if find_kindergarten(kindergarten) == None:
         return
     else:
@@ -432,14 +432,14 @@ def add_child(kindergarten):
             return kindergartens
         
 #remove child
-'''
+def remove_child(name):
+    '''
 remove a child by passing a name
 arguments:
     name: str
 return:
     kindergartens: list
-'''
-def remove_child(name):
+    '''
     if find_child(name) == None:
         return
     else:
@@ -449,15 +449,15 @@ def remove_child(name):
         return kindergartens
     
 #move child from kindergarten to another
-'''
+def move_child(name_child, name_kindergarten):
+    '''
 move one child from one kindergarten to another
 arguments:
     name: str
     kindergarten: dict
 return:
     kindergartens
-'''
-def move_child(name_child, name_kindergarten):
+    '''
     if find_kindergarten(name_kindergarten) == None:
         return
     else:
@@ -486,13 +486,13 @@ def move_child(name_child, name_kindergarten):
     return kindergartens
 
 #Add child allergies from the system
-'''
+def add_allergies(name):
+    '''
 add allergies to a child passing a name
 arguments:
     name: str
 return: kindergartens
-'''
-def add_allergies(name):
+    '''
     if find_child(name) == None:
         return
     else:
@@ -511,13 +511,13 @@ def add_allergies(name):
         return kindergartens
     
 #Remove child allergy from the system
-'''
+def remove_allergy(name):
+    '''
 remove allergy from child passing a name
 arguments:
     name: str
 return: kindergartens
-'''
-def remove_allergy(name):
+    '''
     if find_child(name) == None:
         return
     else:
@@ -533,28 +533,44 @@ def remove_allergy(name):
             return
         
 #regex phone validator
-'''
+def validate_phone(phone):
+    '''
 validate, if the input phone number are only digits
 return False if wrong data
-'''
-def validate_phone(phone):
+    '''
     phone_pattern = r'^\+49 \d{2} \d{6}$' 
     return True if re.match(phone_pattern, phone) else False
 #regex mail validator
 def validate_email(email):
+    '''
+validate, if the input email format is right
+return False if wrong data
+    '''
     email_pattern = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
     return True if re.match(email_pattern, email) else False
 
 
 #update Info
-'''
-update any Infomation from any Kindergarten. stop runs, if you input wrong category
-'''
+
 def update_info():
+    '''
+update any Infomation from any Kindergarten. stop runs, if you input wrong data
+runs update_kindergarten_info if input = Kindergarten. Runs update_child_info if input = Children
+    '''
     type = input("Which kind of info you want to update(Kindergarten/Children)?")
-    update_kindergarten_info() if type == 'Kindergarten' else update_child_info()
+    while True:
+        if type == 'Kindergarten':
+            update_kindergarten_info()
+        elif type == 'Children':
+            update_child_info()
+        else:
+            print(f'invalid Data')
+            break
 #update Kindergarten Info
 def update_kindergarten_info():
+    '''
+update any Infomation from any Kindergarten. stop runs, if you input wrong category
+    '''
     name = input(f'Enter the Kindergarten name:')
     if find_kindergarten(name) is None:
         return
@@ -603,10 +619,10 @@ def update_kindergarten_info():
         print(f'Nothing updated')if len(updated_keys) == 0 else print(f'{' and '.join(updated_keys)} from {kg['Name']} updated')
     return kindergartens
 #update child Information
-'''
-update any Infomation from any Child. stop runs, if you input wrong category
-'''
 def update_child_info():
+    '''
+update any Infomation from any Child. stop runs, if you input wrong category
+    '''
     name = input(f'Enter child name: ')
     child_found = False
     for kg in kindergartens:
@@ -638,13 +654,14 @@ def update_child_info():
         print(f'Child {name} was not found on the system')
 
 #stay in the programm
-'''
-Function that asks you, if the programm keeps runing going again to the 
-menu to try again or go out
-'''
 def keepOn():
+    '''
+asks you, if the programm keeps runing going again to the 
+menu to try again or go out
+    '''
     go_back = "Y"
     answer = ""
+    print(f'*'*20)
     print("Do you want go back to menu? (Y/N)")
     answer = input()
     if (answer == "Y" or answer == "y"):

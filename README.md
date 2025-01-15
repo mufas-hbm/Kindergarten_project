@@ -97,10 +97,10 @@ kindergartens = [
  12.   Remove child allergies 
  13.   Show all Kindergartens Information
  14.   update any Information
- 15.   Leave
+ 15.   Exit
 ==================================================
 
-Enter a task number: 
+What you want to do? 
 ```
 ### Listing children from kindergarten
 ```bash
@@ -126,12 +126,12 @@ Enter one allergy: Eggs
 Enter one allergy: Shellfish
 Enter one allergy: 
 allergies added
-Do you want go back to menu? (Y/N)
-y
+
+Press Enter to continue...
 ```
 ### List all kindergarten
 ```bash
-Enter a task number: 13
+What you want to do?  13
 --------------------
 Name: Sunshine Kindergarten
 Location: Berlin, Germany
@@ -188,7 +188,5 @@ Contact Information:
 Number of enrolled infants: 2
 Available enrollment spots: 88
 --------------------
-Do you want go back to menu? (Y/N)
-n
-Bye!
+Press Enter to continue...
 ```

@@ -1,4 +1,9 @@
 import re
+# TODO generally will be better to split all in different files for example:
+# - data.py
+# - main.py
+# - managers_children.py
+# - managers_kg.py
 
 #default data
 kindergartens = [
@@ -200,7 +205,8 @@ print all the kindergartens
     for kg in kindergartens:
         kg_name = kg['Name']
         print("-"*20)
-        print(f'Name: {kg['Name']}')
+        # TODO use already created var kg_name
+        print(f'Name: {kg_name}')
         kindergarten_information(kg_name)
         print("-"*20)
 
@@ -236,6 +242,9 @@ delete a kindergarten passing the name. If doesn't exists, show message
 arguments:
     name: str
     '''
+    # TODO lest call find_kindergarten(name) one time outside loop:
+    # kindergarten = find_kindergarten(name)
+    # if not kindergarten: .....
     if find_kindergarten(name) == None:
         return
     else:
@@ -256,6 +265,7 @@ arguments:
     else:
         kg = find_kindergarten(name)
         location = kg['Location']
+        # TODO this var is not used
         facilities = kg['Facilities']
         capacity = kg['Capacity']
         contact = kg['Contact']
@@ -273,6 +283,7 @@ arguments:
         print(f'Number of enrolled infants: {children}')
         print(f'Available enrollment spots: {open_spots}') 
 
+# TODO if you have children as a list you do not need lambda, you can just call len(children) in code wherever u need this
 #lambda function returns number of children in a kindergarten 
 count_children = lambda children: len(children)
 
@@ -293,17 +304,34 @@ arguments:
 return:
     kindergartens: list of dict
     '''
+    # TODO same lets call function 1 time outside of the conditions
     if find_kindergarten(name) == None:
         return
     else:
         kg = find_kindergarten(name)
         facilities = kg['Facilities']
+        # TODO here program asks 2 times to input facility, I would do next:
+        #else:
+        """  while True:
+            facility = input('Enter facility (leave blank to finish): ')
+            if not facility:  # Stop loop if input is empty
+                break
+            elif facility in facilities:
+                print(f'{facility} already exists.')
+            else:
+                facilities.append(facility)
+                print(f'{facility} added.')
+
+        print('Facilities added successfully.')
+        return kindergartens """
+
         facility = input(f'Enter facility: ')
         facilities.append(facility)
         #loop runs until break statement comes
         while True:
             facility = input(f'Enter facility: ')
-            if facility == "":
+            # TODO here we can use if not facility
+            if not facility:
                 break
             elif facility in facilities:
                 print(f'{facility} already exists')
@@ -321,6 +349,7 @@ arguments:
 return:
     kindergartens: list of dict
     '''
+    # TODO if not find_kindergarten(name): -> more pythonic way 
     if find_kindergarten(name) == None:
             return
     else:
@@ -329,6 +358,7 @@ return:
         facility = input(f'Enter facility: ')
         if facility in facilities:
             facilities.remove(facility)
+            # if there is no extra logic for this function on None return I would return kindergartens generally for all conditions
             print(f'Facility removed')
             return kindergartens
         else:
@@ -360,15 +390,17 @@ search for a child and show information
 arguments:
     name: str
     ''' 
+    # TODO same here -> if not find_child(name):
     if find_child(name) == None:
         return
     else:
         child, kindergarten = find_child(name)
-        print(f'what school does he go to: {kindergarten['Name']}')
-        print(f'Name: {child['Name']}')
-        print(f'Age: {child['Age']}')
-        print(f'Allergies: {', '.join(child['Allergies'])}')
-        print(f'Favorite Activity: {child['FavoriteActivity']}')
+        print(f'what school does he go to: {kindergarten["Name"]}')
+        print(f'Name: {child["Name"]}')
+        print(f'Age: {child["Age"]}')
+        print(f'Allergies: {", ".join(child["Allergies"])}')
+        print(f'Favorite Activity: {child["FavoriteActivity"]}')
+    # TODO good practice to return child dict in this case
 
 #List Children of a kindergarten
 def list_children(kindergarten):
@@ -377,19 +409,33 @@ passing a kindergarten list all the children
 argument:
     kindergarten: str
     '''
+    # TODO generally we can make all such logic better (no extra call for find_kindergarten and no extra conditions):
+    """ 
+    kg = find_kindergarten(kindergarten)
+    if kg:
+        children = kg['Children']
+        if len(children) == 0:
+            print (f'{kg["Name"]} has no children registered')
+        else:       
+            for child in children:
+                print(f'Name: {child["Name"]}')
+                print(f'Age: {child["Age"]}')
+                print(f'Allergies: {", ".join(child["Allergies"])}')
+                print(f'Favorite Activity: {child["FavoriteActivity"]}')
+                print(f'--------------------------------') """
     if find_kindergarten(kindergarten) == None:
         return
     else:
         kg = find_kindergarten(kindergarten)
         children = kg['Children']
         if len(children) == 0:
-            print (f'{kg['Name']} has no children registered')
+            print (f'{kg["Name"]} has no children registered')
         else:       
             for child in children:
-                print(f'Name: {child['Name']}')
-                print(f'Age: {child['Age']}')
-                print(f'Allergies: {', '.join(child['Allergies'])}')
-                print(f'Favorite Activity: {child['FavoriteActivity']}')
+                print(f'Name: {child["Name"]}')
+                print(f'Age: {child["Age"]}')
+                print(f'Allergies: {", ".join(child["Allergies"])}')
+                print(f'Favorite Activity: {child["FavoriteActivity"]}')
                 print(f'--------------------------------')
 
 #add child
@@ -402,6 +448,7 @@ return:
     None if Kindergarten is already full of children
     kindergartens: list
     '''
+    # TODO Same story as with func above
     if find_kindergarten(kindergarten) == None:
         return
     else:
@@ -458,6 +505,7 @@ arguments:
 return:
     kindergartens
     '''
+    # TODO almost all func have this if...else and calling find_kindergarten 2 times inside, could be improved like above in list_child
     if find_kindergarten(name_kindergarten) == None:
         return
     else:
@@ -500,6 +548,7 @@ return: kindergartens
         allergies = child['Allergies']
         #loop runs until break statement comes
         while True:
+            # TODO input does not need f-string
             allergy = input(f'Enter one allergy: ')
             if allergy == "":
                 break
@@ -507,6 +556,7 @@ return: kindergartens
                 print(f'{allergy} already exists')
             else:
                 allergies.append(allergy)
+        # TODO here also no need for f-string 
         print(f'allergies added')
         return kindergartens
     
@@ -558,6 +608,7 @@ update any Infomation from any Kindergarten. stop runs, if you input wrong data
 runs update_kindergarten_info if input = Kindergarten. Runs update_child_info if input = Children
     '''
     type = input("Which kind of info you want to update(Kindergarten/Children)?")
+    # TODO you do not need while loop here, there is only 3 conditions and input is taken outside of loop
     while True:
         if type == 'Kindergarten':
             update_kindergarten_info()
@@ -575,6 +626,7 @@ update any Infomation from any Kindergarten. stop runs, if you input wrong categ
     if find_kindergarten(name) is None:
         return
     else:
+        # TODO big function better to split in smaller, hard to read 
         kg = find_kindergarten(name)
         categories = '/'.join(kg.keys())
         updated_keys = []
@@ -616,7 +668,7 @@ update any Infomation from any Kindergarten. stop runs, if you input wrong categ
                             updated_keys.append(key)
                             break 
                         else: print("Invalid email format. Please try again.")  
-        print(f'Nothing updated')if len(updated_keys) == 0 else print(f'{' and '.join(updated_keys)} from {kg['Name']} updated')
+        print(f'Nothing updated')if len(updated_keys) == 0 else print(f'{" and ".join(updated_keys)} from {kg["Name"]} updated')
     return kindergartens
 #update child Information
 def update_child_info():
@@ -628,6 +680,7 @@ update any Infomation from any Child. stop runs, if you input wrong category
     for kg in kindergartens:
         children = kg['Children']
         for child in children:
+            # TODO here line 679 is extra you can just check if name == child['Name']:
             child_name = child['Name']
             if child_name == name:
                 categories = '/'.join(child.keys())
@@ -648,7 +701,7 @@ update any Infomation from any Child. stop runs, if you input wrong category
                         child[key] = input(f'new {key}:')
                         updated_keys.append(key)
                 child_found = True
-                print(f'Nothing updated')if len(updated_keys) == 0 else print(f'{' and '.join(updated_keys)} from {child['Name']} updated')
+                print(f'Nothing updated')if len(updated_keys) == 0 else print(f'{" and ".join(updated_keys)} from {child["Name"]} updated')
                 return kindergartens
     if not child_found:
         print(f'Child {name} was not found on the system')

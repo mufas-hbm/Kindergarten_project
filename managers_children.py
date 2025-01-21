@@ -1,5 +1,5 @@
 from data import kindergartens
-from managers_kg import *
+from managers_kg import find_kindergarten
 
 def find_child(name):
     """ Search for a child in the system. If the child doesn't exist, return None. 

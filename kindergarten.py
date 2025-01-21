@@ -1,4 +1,5 @@
-from managers import *
+from managers_children import *
+from managers_kg import *
 
 def show_menu():
     """ 
@@ -53,7 +54,7 @@ def main():
         chosen_number = int(chosen_number) 
 
         if chosen_number == 1:
-            print(f'You want to add Kindergarten to the system, please fill the data:\n')
+            print("You want to add Kindergarten to the system, please fill the data:\n")
             name = input("Enter a name: ")
             location = input("Enter a location: ")
             capacity = input("How many children are allowed? ")
@@ -128,7 +129,7 @@ def main():
             update_info()
             keepOn()
         elif chosen_number == 15:
-            print(f'See you next time')
+            print("See you next time")
             break
         else:
             print("this option doesn't exist, try again")
